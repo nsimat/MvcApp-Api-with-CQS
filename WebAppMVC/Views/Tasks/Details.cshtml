@@ -1,0 +1,52 @@
+@model TaskViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+}
+
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-sm-5 bg-white my-4">
+
+            <div class="text-center mb-4">
+                <h1 class="h4 mb-1">Task Details</h1>
+                <p class="text-muted mb-3">Information about that task</p>
+            </div>
+
+            <div class="card-body">
+
+                <form asp-controller="Tasks" asp-action="Edit" method="get" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger visually-hidden" role="alert"></div>
+
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" readonly />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DateCreation" class="form-label"></label>
+                        <input asp-for="DateCreation" class="form-control" readonly />
+                        <span asp-validation-for="DateCreation" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <!-- hidden field for sending false value if unchecked -->
+                        <input type="hidden" asp-for="IsClosed" value="false" readonly/>
+                        <label asp-for="IsClosed" class="form-label"></label>
+                        <input asp-for="IsClosed" class="form-check-input" type="checkbox" readonly />
+                        <span asp-validation-for="IsClosed" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-between align-items-center mt-4">
+                        <button type="submit" class="btn btn-warning">Edit Task</button>
+                        <a asp-controller="Tasks" asp-action="Index" class="btn btn-outline-secondary ms-2">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Tache>
+
+@{
+    ViewData["Titre"] = "Tasks";
+    Layout = "_Layout";
+}
+
+<div class="container my-5">
+    <!-- Head of page with alignment with flexbox -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-dark fw-bold">List of Tasks</h1>
+        <a asp-controller="Tasks" asp-action="Create" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Create Task
+        </a>
+    </div>
+
+    <!-- Table container for horizontal scrolling on mobile -->
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4" style="width: 80px;">#Id</th>
+                        <th>Title</th>
+                        <th>Date of Creation</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4" style="width: 140px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model)
+                    {
+                        <tr>
+                            <!-- ID discreet -->
+                            <td class="ps-4 text-muted font-monospace">@task.Id</td>
+
+                            <!-- Title with emphasis -->
+                            <td class="fw-semibold text-dark">@task.Titre</td>
+
+                            <!-- Date with icon -->
+                            <td class="text-secondary">
+                                <i class="bi bi-calendar3 me-1 text-muted"></i>
+                                @task.DateCreation.ToShortDateString()
+                            </td>
+
+                            <!-- Status replaced by dynamic badge -->
+                            <td>
+                                @if (task.Cloturee.HasValue && task.Cloturee.Value)
+                                {
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2">
+                                        <i class="bi bi-check-circle-fill me-1"></i> Completed
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-3 py-2">
+                                        <i class="bi bi-clock-history me-1"></i> In Progress
+                                    </span>
+                                }
+                            </td>
+
+                            <!-- Action Buttons aligned properly to the right -->
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Actions of the task">
+                                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id"
+                                       class="btn btn-outline-secondary" title="Details / Edit">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                    <a asp-route="MvcTasksDelete" asp-route-id="@task.Id"
+                                       class="btn btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

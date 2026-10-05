@@ -1,0 +1,6 @@
+@WebbApiwithCQS_HostAddress = http://localhost:5101
+
+GET {{WebbApiwithCQS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

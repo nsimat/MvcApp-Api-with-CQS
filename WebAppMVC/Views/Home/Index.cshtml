@@ -1,0 +1,134 @@
+﻿@{
+    ViewData["Titre"] = "Home Page";
+}
+
+<div class="container-fluid my-4">
+    <!-- Entête du Tableau de Bord -->
+    <div class="d-md-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+            <h1 class="h2 fw-bold text-dark mb-1">Dashboard</h1>
+            <p class="text-muted mb-0">Management and Tracking of your stacks</p>
+        </div>
+        <div class="mt-3 mt-md-0">
+            <button class="btn btn-primary shadow-sm">
+                <i class="bi bi-plus-lg me-1"></i> New Task
+            </button>
+        </div>
+    </div>
+
+    <!-- Section Statistiques (Cartes d'indicateurs) -->
+    <div class="row g-3 mb-4">
+        <!-- Carted : To-Do -->
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-warning">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold text-uppercase">To-do List</div>
+                    <div class="h3 fw-bold text-dark mt-2 mb-0">5</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card : In Progress -->
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-primary">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold text-uppercase">In Progress</div>
+                    <div class="h3 fw-bold text-dark mt-2 mb-0">3</div>
+                </div>
+            </div>
+        </div>
+        <!-- Carted : Completed -->
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-success">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold text-uppercase">Completed</div>
+                    <div class="h3 fw-bold text-dark mt-2 mb-0">12</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card : Completion Rate -->
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-info">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold text-uppercase">Progression</div>
+                    <div class="h3 fw-bold text-dark mt-2 mb-0">70%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Section : Tasks List -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="card-title fw-bold mb-0 text-dark">Recent Tasks</h5>
+                    <span class="badge bg-secondary-subtle text-secondary rounded-pill">8 pending</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col" class="ps-4">Task</th>
+                                <th scope="col">Priority</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col" class="text-end pe-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Ligne 1 : En cours -->
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-semibold text-dark">Configure authentication</div>
+                                    <small class="text-muted">Set up Identity Framework</small>
+                                </td>
+                                <td><span class="badge bg-danger">High</span></td>
+                                <td><span class="badge bg-primary-subtle text-primary rounded-pill px-3">In Progress</span></td>
+                                <td class="text-muted">Today</td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-outline-secondary me-1">Modify</button>
+                                    <button class="btn btn-sm btn-success">Complete</button>
+                                </td>
+                            </tr>
+                            <!-- Ligne 2 : To do -->
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-semibold text-dark">Create data models</div>
+                                    <small class="text-muted">Generate Entity Framework migrations</small>
+                                </td>
+                                <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                <td><span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-3">To Do</span></td>
+                                <td class="text-muted">Tomorrow</td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-outline-secondary me-1">Modifier</button>
+                                    <button class="btn btn-sm btn-success">Complete</button>
+                                </td>
+                            </tr>
+                            <!-- Ligne 3 : Terminated -->
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-semibold text-dark text-decoration-line-through text-muted">Initialize the project</div>
+                                    <small class="text-muted">Create an ASP.NET Core 10.0 solution</small>
+                                </td>
+                                <td><span class="badge bg-secondary">Low</span></td>
+                                <td><span class="badge bg-success-subtle text-success rounded-pill px-3">Completed</span></td>
+                                <td class="text-muted text-decoration-line-through">Yesterday</td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm btn-outline-secondary" disabled>Completed</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- List footer (Pagination or link) -->
+                <div class="card-footer bg-white text-center py-3">
+                    <a asp-controller="Tasks" asp-action="Index" class="text-decoration-none small fw-semibold">
+                        <i class="bi bi-list-task"></i> View all tasks
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
