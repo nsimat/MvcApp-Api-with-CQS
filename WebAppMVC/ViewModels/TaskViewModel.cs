@@ -20,5 +20,13 @@ namespace WebAppMVC.ViewModels
         [Column(TypeName = "bit")]
         [DisplayName("IsClosed?")]
         public bool IsClosed { get; set; }
+
+        public void DateCreationValidation(DateTime dateCreation)
+        {
+            if (dateCreation > DateTime.Now)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dateCreation), "The date of creation cannot be in the future.");
+            }
+        }
     }
 }
