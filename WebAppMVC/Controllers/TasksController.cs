@@ -38,6 +38,7 @@ namespace WebAppMVC.Controllers
         public ActionResult Create()
         {
             var task = new TaskViewModel();
+            task.DateCreation = DateTime.Now;
 
             return View(task);
         }
@@ -53,7 +54,7 @@ namespace WebAppMVC.Controllers
                     "api/tasks",
                     new
                     {
-                        Titre = task.Title
+                        task.Title
                     });
 
             return response.IsSuccessStatusCode ? RedirectToAction("Index") : View(task);

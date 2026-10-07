@@ -1,4 +1,4 @@
-﻿using WebbApiwithCQS.Domain.Abstractions;
+﻿using WebbApiwithCQS.Domain.Abstractions.Queries;
 using WebbApiwithCQS.Domain.Entities;
 
 namespace WebbApiwithCQS.Domain.Queries;

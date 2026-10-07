@@ -1,26 +1,27 @@
 ﻿@{
     ViewData["Titre"] = "Home Page";
+    Layout = "_Layout";
 }
 
 <div class="container-fluid my-4">
     <!-- Entête du Tableau de Bord -->
-    <div class="d-md-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+    <div class="d-md-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
         <div>
             <h1 class="h2 fw-bold text-dark mb-1">Dashboard</h1>
             <p class="text-muted mb-0">Management and Tracking of your stacks</p>
         </div>
         <div class="mt-3 mt-md-0">
-            <button class="btn btn-primary shadow-sm">
+            <button asp-controller="Tasks" asp-action="Create" class="btn btn-primary shadow-sm">
                 <i class="bi bi-plus-lg me-1"></i> New Task
             </button>
         </div>
     </div>
 
     <!-- Section Statistiques (Cartes d'indicateurs) -->
-    <div class="row g-3 mb-4">
+    <div class="row g-3 mb-3">
         <!-- Carted : To-Do -->
         <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100 border-start border-4 border-warning">
+            <div class="card border-primary-subtle shadow-sm h-100 border-start border-4 border-warning">
                 <div class="card-body">
                     <div class="text-muted small fw-semibold text-uppercase">To-do List</div>
                     <div class="h3 fw-bold text-dark mt-2 mb-0">5</div>
@@ -29,7 +30,7 @@
         </div>
         <!-- Card : In Progress -->
         <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100 border-start border-4 border-primary">
+            <div class="card border-primary-subtle shadow-sm h-100 border-start border-4 border-primary-subtle">
                 <div class="card-body">
                     <div class="text-muted small fw-semibold text-uppercase">In Progress</div>
                     <div class="h3 fw-bold text-dark mt-2 mb-0">3</div>
@@ -38,7 +39,7 @@
         </div>
         <!-- Carted : Completed -->
         <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100 border-start border-4 border-success">
+            <div class="card border-primary-subtle shadow-sm h-100 border-start border-4 border-success">
                 <div class="card-body">
                     <div class="text-muted small fw-semibold text-uppercase">Completed</div>
                     <div class="h3 fw-bold text-dark mt-2 mb-0">12</div>
@@ -47,7 +48,7 @@
         </div>
         <!-- Card : Completion Rate -->
         <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100 border-start border-4 border-info">
+            <div class="card border-primary-subtle shadow-sm h-100 border-start border-4 border-info">
                 <div class="card-body">
                     <div class="text-muted small fw-semibold text-uppercase">Progression</div>
                     <div class="h3 fw-bold text-dark mt-2 mb-0">70%</div>
@@ -59,7 +60,7 @@
     <!-- Main Section : Tasks List -->
     <div class="row">
         <div class="col-12">
-            <div class="card border-0 shadow-sm">
+            <div class="card border-primary-subtle shadow-sm">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                     <h5 class="card-title fw-bold mb-0 text-dark">Recent Tasks</h5>
                     <span class="badge bg-secondary-subtle text-secondary rounded-pill">8 pending</span>

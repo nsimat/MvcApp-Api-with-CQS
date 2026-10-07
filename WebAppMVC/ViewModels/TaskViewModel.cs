@@ -21,11 +21,11 @@ namespace WebAppMVC.ViewModels
         [DisplayName("IsClosed?")]
         public bool IsClosed { get; set; }
 
-        public void DateCreationValidation(DateTime dateCreation)
+        public void DateCreationValidation(DateTime dateCreation)//à revoir
         {
-            if (dateCreation > DateTime.Now)
+            if (dateCreation < DateTime.Now)
             {
-                throw new ArgumentOutOfRangeException(nameof(dateCreation), "The date of creation cannot be in the future.");
+                throw new ArgumentOutOfRangeException(nameof(dateCreation), "The date of creation cannot be in the past.");
             }
         }
     }

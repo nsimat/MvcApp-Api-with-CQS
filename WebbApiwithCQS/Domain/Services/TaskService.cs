@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebbApiwithCQS.Domain.Abstractions;
+using WebbApiwithCQS.Domain.Abstractions.Results;
 using WebbApiwithCQS.Domain.Commands;
 using WebbApiwithCQS.Domain.Data;
 using WebbApiwithCQS.Domain.Entities;
@@ -12,21 +12,21 @@ public class TaskService(TaskDbContext taskDbContext) : ITaskRepository
 {
     private readonly TaskDbContext _taskDbContext = taskDbContext ?? throw new ArgumentNullException(nameof(taskDbContext));
 
-    public async Task<IEnumerable<Tache>> Execute(GetTasksQuery query)
+    public Task<Result<IEnumerable<Tache>>> ExecuteAsync(GetTasksQuery query)
     {
-        var q = _taskDbContext.Taches.AsQueryable();
+        var tasks = _taskDbContext.Taches.AsNoTracking().ToList();
 
-        return await q.ToListAsync();
+        return Task.FromResult((Result<IEnumerable<Tache>>)tasks);
     }
 
-    public async Task<Tache> Execute(GetTaskByIdQuery query)
+    public async Task<Result<Tache>> ExecuteAsync(GetTaskByIdQuery query)
     {
         var tache = await _taskDbContext.Taches.FindAsync(query.Id);
 
-        return tache;
+        return (Result<Tache>?)tache ?? TaskErrors.NotFound;
     }
 
-    public async Task<bool> Execute(InsertTaskCommand command)
+    public async Task<Result<bool>> ExecuteAsync(InsertTaskCommand command)
     {
         if (command is null)
             throw new ArgumentNullException($"Command {command} must not be null!");
@@ -37,61 +37,52 @@ public class TaskService(TaskDbContext taskDbContext) : ITaskRepository
         };
 
         _taskDbContext.Taches.Add(task);
-        int changes = await _taskDbContext.SaveChangesAsync();
+        var changes = await _taskDbContext.SaveChangesAsync();
 
         return changes > 0;
     }
 
-    public async Task<bool> Execute(UpdateTaskCommand command)
+    public async Task<Result<bool>> ExecuteAsync(UpdateTaskCommand command)
     {
-        if (command is null) throw new ArgumentNullException(nameof(command));
+        ArgumentNullException.ThrowIfNull(command);
+
+        if (command.Tache is null)
+            throw new ArgumentException("The field 'Tache' of parameter 'command' must not be null.",
+                 nameof(command));
 
         var tacheToUpdate = await _taskDbContext.Taches.FindAsync(command.Id);
 
         if (tacheToUpdate is null)
             return false;
 
-        if (command.Tache is null)
-        {
-            throw new ArgumentException("The field 'tache' of parameter 'command' must not be null.",
-                nameof(command));
-        }
-
-
         tacheToUpdate.Titre = command.Tache.Titre;
-        tacheToUpdate.Cloturee = command.Tache.Cloturee;
+        tacheToUpdate.DateCreation = command.Tache.DateCreation;
 
         // Ne pas réaffecter DateCreation puisque la base gère la valeur par défaut
         var changes = await _taskDbContext.SaveChangesAsync();
 
         return changes > 0;
-
     }
 
-    public async Task<bool> Execute(PatchTaskCommand command)
+    public async Task<Result<bool>> ExecuteAsync(TaskClosureCommand closureCommand)
     {
-        if (command is null)
-            throw new ArgumentNullException(nameof(command));
+        ArgumentNullException.ThrowIfNull(closureCommand);
 
-        var taskToPatch = await _taskDbContext.Taches.FindAsync(command.Id);
+        var taskToClose = await _taskDbContext.Taches.FindAsync(closureCommand.Id);
 
-        if (taskToPatch is null)
+        if (taskToClose is null)
             return false;
 
-        if (command.Task is null)
-            throw new ArgumentNullException(nameof(command));
+        taskToClose.Cloturee = true;
 
-        taskToPatch.Cloturee = command.Task.Cloturee;
-
-        int changes = await _taskDbContext.SaveChangesAsync();
+        var changes = await _taskDbContext.SaveChangesAsync();
 
         return changes > 0;
     }
 
-    public async Task<bool> Execute(DeleteTaskCommand command)
+    public async Task<Result<bool>> ExecuteAsync(DeleteTaskCommand command)
     {
-        if (command is null)
-            throw new ArgumentNullException(nameof(command));
+        ArgumentNullException.ThrowIfNull(command);
 
         var tache = await _taskDbContext.Taches.FindAsync(command.Id);
 

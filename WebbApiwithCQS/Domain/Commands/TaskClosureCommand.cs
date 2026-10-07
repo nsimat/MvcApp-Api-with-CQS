@@ -3,4 +3,4 @@ using WebbApiwithCQS.Domain.Entities;
 
 namespace WebbApiwithCQS.Domain.Commands;
 
-public record UpdateTaskCommand(int Id, Tache Tache) : ICommandDefinition<bool>;
+public record TaskClosureCommand(int Id) : ICommandDefinition<bool>;
